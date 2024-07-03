@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Search from "../components/Search";
-import beersJSON from "./../assets/beers.json";
 
 
 
@@ -17,33 +16,25 @@ function AllBeersPage() {
   // 3. Use the response data from the Beers API to update the state variable.
 
   useEffect(() => {
-    const fetchData = async() => {
-      try {
-        const response = await fetch("https://ih-beers-api2.herokuapp.com/beers");
-
-        if (!response.ok) {
-          throw new Error("Error fetching data: ", response);
-        }
-
-        const data = await response.json();
-        //console.log("data: ", data);
-        
-        setBeers(data);
-
-      } catch (error) {
-        console.log("Erro occured: ", error)
-      }
-    }
-
-    fetchData();
+    
+    fetchData("https://ih-beers-api2.herokuapp.com/beers", setBeers);
 
   }, []);
+
+  // display search results, get the result and query
+  const displaySearchResults = (query, results) => {
+    // if there is a query, meaning something was searched, display results
+    // else (if searchbar is empty) display all beers
+    return query ?
+    setBeers(results) :
+    fetchData("https://ih-beers-api2.herokuapp.com/beers", setBeers)
+  }
 
 
   // The logic and the structure for the page showing the list of beers. You can leave this as it is for now.
   return (
     <>
-      <Search />
+      <Search displaySearchResults={displaySearchResults}/>
 
       <div className="d-inline-flex flex-wrap justify-content-center align-items-center w-100 p-4">
         {beers &&

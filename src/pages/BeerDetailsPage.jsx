@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import beersJSON from "./../assets/beers.json";
 
 
 function BeerDetailsPage() {
@@ -21,24 +20,8 @@ function BeerDetailsPage() {
   const { beerId } = useParams();
 
   useEffect(() => {
-    const fetchData = async() => {
-      try {
-        const response = await fetch(`https://ih-beers-api2.herokuapp.com/beers/${beerId}`);
 
-        if (!response.ok) {
-          throw new Error("error fetching data: ", response);
-        }
-
-        const data = await response.json()
-
-        setBeer(data);
-
-      } catch (error) {
-        console.log("Error: ", error);
-      }
-    }
-
-    fetchData();
+    fetchData(`https://ih-beers-api2.herokuapp.com/beers/${beerId}`, setBeer);
 
   }, []);
 

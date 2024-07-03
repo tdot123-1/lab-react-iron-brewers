@@ -56,9 +56,6 @@ function AddBeerPage() {
 
       const data = await response.json();
 
-      console.log("Succes: ", response);
-      console.log("posted data: ", data);
-
       navigate("/")
 
     } catch (error) {
